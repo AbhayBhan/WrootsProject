@@ -9,19 +9,49 @@ import JobHeadCard from "@/components/JobHeadCard";
 import SharingCard from "@/components/SharingCard";
 import ModalBlank from "@/components/ModalBlank";
 import VerificationPage from "@/partials/VerificationPage";
+import ReferralPage from "@/partials/ReferralPage";
+import { ReferSingle } from "@/hooks/Refer/Refer";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [applied, setApplied] = useState(false);
+  const [jobDetails, setJobDetails] = useState({});
 
   const [applyModal, setApplyModal] = useState(false);
+  const [referModal, setReferModal] = useState(false);
 
-  const jobFetchSuccess = (data) => {
+  const jobFetchSuccess = ({data}) => {
+    setJobDetails(data);
     setLoading(false);
   };
+
+  const applySuccess = () => {
+    setApplied(true);
+    setApplyModal(true);
+  }
 
   const {data,mutate} = useMutation(getJobDetails, {
     onSuccess : jobFetchSuccess
   });
+
+  const {mutate : jobMutate} = useMutation(ReferSingle,{
+    onSuccess : applySuccess
+  });
+
+  const submitJob = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const reqBody = {
+      categoryId : jobDetails?.category.id,
+      userId : user?.id,
+      roleId : null,
+      hiringCompanyId : jobDetails?.company.id,
+      name : user?.name || "",
+      email : user?.email || "",
+      phoneNumber : user?.phoneNumber
+    }
+
+    jobMutate(reqBody);
+  }
 
   useEffect(() => {
     mutate('abcd');
@@ -59,7 +89,7 @@ export default function Home() {
 
           {/* <JobHeadCard /> */}
 
-          <BonusCard />
+          <BonusCard setReferModal={setReferModal}/>
 
           <div className="flex flex-col gap-4">
             <h1 className="text-xl font-bold">Job Overview</h1>
@@ -95,10 +125,17 @@ export default function Home() {
         <div className="flex flex-col space-y-6 items-center">
           <div className="flex flex-col justify-center items-center space-y-3 py-4 rounded-lg w-64 bg-blue-50">
             <h1 className="font-medium">Sounds like a match?</h1>
-            <button onClick={() => setApplyModal(true)} className="px-4 py-2 bg-green-500 text-white rounded-lg w-3/4">
+            <button onClick={() => {
+              const user = JSON.parse(localStorage.getItem('user'));
+              if(user){
+                submitJob();
+              }else{
+                setApplyModal(true)
+              }
+            }} className="px-4 py-2 bg-green-500 text-white rounded-lg w-3/4">
               Apply Now
             </button>
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-lg w-3/4">
+            <button onClick={() => setReferModal(true)} className="px-4 py-2 bg-blue-500 text-white rounded-lg w-3/4">
               Refer & Earn Upto 90,000
             </button>
           </div>
@@ -109,7 +146,10 @@ export default function Home() {
         </div>
       </div>}
       <ModalBlank openModal={applyModal} setOpenModal={setApplyModal} title={"Apply For Job"}>
-        <VerificationPage />
+        <VerificationPage applied={applied} submitJob={submitJob} />
+      </ModalBlank>
+      <ModalBlank openModal={referModal} setOpenModal={setReferModal} title={"Refer more People"}>
+        <ReferralPage />
       </ModalBlank>
     </div>
   );
