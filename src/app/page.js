@@ -83,9 +83,9 @@ export default function Home() {
 
           <div className="border-t-2"></div>
 
-          {/* <JobHeadCard /> */}
+          <JobHeadCard jobDetails={jobDetails} />
 
-          <BonusCard setReferModal={setReferModal}/>
+          <BonusCard referralAmount={jobDetails.referralAmount} setReferModal={setReferModal}/>
 
           <div className="flex flex-col gap-4">
             <h1 className="text-xl font-bold">Job Overview</h1>
@@ -145,7 +145,7 @@ export default function Home() {
         {verified ? <VerifiedComponent /> : <VerificationPage setVerified={setVerified} submitJob={submitJob} />}
       </ModalBlank>
       <ModalBlank openModal={referModal} setOpenModal={setReferModal} title={"Refer more People"}>
-        {verified ? <ReferralPage jobDetails={jobDetails} /> : <VerificationPage setVerified={setVerified} />}
+        {verified ? <ReferralPage referralAmount={jobDetails.referralAmount} jobDetails={jobDetails} /> : <VerificationPage setVerified={setVerified} />}
       </ModalBlank>
     </div>
   );

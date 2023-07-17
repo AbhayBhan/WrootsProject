@@ -5,7 +5,7 @@ import { ReferMultiple } from "@/hooks/Refer/Refer";
 import { useMutation } from "react-query";
 import ReferredComponent from "@/components/ReferredComponent";
 
-const ReferralPage = ({ jobDetails }) => {
+const ReferralPage = ({ jobDetails , referralAmount }) => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const [referred, setReferred] = useState(false);
@@ -72,7 +72,7 @@ const ReferralPage = ({ jobDetails }) => {
           </strong>
         </h1>
         <h1 className="text-sm">
-          Referral Amount : <strong>Rs 90,000</strong>
+          Referral Amount : <strong>Rs {referralAmount}</strong>
         </h1>
       </div>
       <div className="block space-y-3">
