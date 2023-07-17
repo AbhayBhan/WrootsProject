@@ -8,24 +8,22 @@ import OtpInput from "react-otp-input";
 import "react-phone-input-2/lib/style.css";
 import { RequestOTP , VerifyOTP } from "@/hooks/Verification/Verification";
 import { useMutation } from "react-query";
-import VerifiedComponent from "@/components/VerifiedComponent";
+import Loader from "@/components/Loader";
 
-const VerificationPage = ({applied,submitJob}) => {
+const VerificationPage = ({setVerified,submitJob}) => {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [verifyPage, setVerifyPage] = useState(false);
-  const [verifiedPage, setVerifiedPage] = useState(applied);
 
   const otpSuccess = () => {
     setVerifyPage(true);
-    console.log("success");
   };
 
   const verificationSuccess = ({data}) => {
     localStorage.setItem('user', JSON.stringify(data));
-    setVerifyPage(false);
-    setVerifiedPage(true);
     submitJob();
+    setVerifyPage(false);
+    setVerified(true);
   }
 
   const { mutate, isLoading : otpLoading } = useMutation(RequestOTP, {
@@ -49,9 +47,7 @@ const VerificationPage = ({applied,submitJob}) => {
 
   return (
     <>
-      {verifiedPage ? (
-        <VerifiedComponent />
-      ) : verifyPage ? (
+      {verifyPage ? (
         <div className="flex flex-col items-start space-y-5">
           <div className="block space-y-3">
             <h1 className="text-2xl text-blue-900 font-bold">+{phone}</h1>
@@ -100,9 +96,8 @@ const VerificationPage = ({applied,submitJob}) => {
               onClick={verifyOTP}
               className="px-4 py-2 bg-green-500 text-white rounded-lg"
             >
-              Verify
+              {verifyLoading ? <Loader /> : "Verify"}
             </button>
-            {verifyLoading ? <h1>Loading...</h1> : <></>}
           </div>
         </div>
       ) : (
@@ -132,9 +127,8 @@ const VerificationPage = ({applied,submitJob}) => {
               onClick={askOTP}
               className="px-4 py-2 bg-green-500 text-white rounded-lg"
             >
-              Get OTP
+              {otpLoading ? <Loader /> : "Get OTP"}
             </button>
-            {otpLoading ? <h1>Loading...</h1> : <></>}
           </div>
         </div>
       )}

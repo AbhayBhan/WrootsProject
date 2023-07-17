@@ -11,10 +11,13 @@ import ModalBlank from "@/components/ModalBlank";
 import VerificationPage from "@/partials/VerificationPage";
 import ReferralPage from "@/partials/ReferralPage";
 import { ReferSingle } from "@/hooks/Refer/Refer";
+import VerifiedComponent from "@/components/VerifiedComponent";
 
 export default function Home() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const [verified, setVerified] = useState(user);
+
   const [loading, setLoading] = useState(true);
-  const [applied, setApplied] = useState(false);
   const [jobDetails, setJobDetails] = useState({});
 
   const [applyModal, setApplyModal] = useState(false);
@@ -25,18 +28,11 @@ export default function Home() {
     setLoading(false);
   };
 
-  const applySuccess = () => {
-    setApplied(true);
-    setApplyModal(true);
-  }
-
   const {data,mutate} = useMutation(getJobDetails, {
     onSuccess : jobFetchSuccess
   });
 
-  const {mutate : jobMutate} = useMutation(ReferSingle,{
-    onSuccess : applySuccess
-  });
+  const {mutate : jobMutate} = useMutation(ReferSingle);
 
   const submitJob = () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -126,11 +122,11 @@ export default function Home() {
           <div className="flex flex-col justify-center items-center space-y-3 py-4 rounded-lg w-64 bg-blue-50">
             <h1 className="font-medium">Sounds like a match?</h1>
             <button onClick={() => {
-              const user = JSON.parse(localStorage.getItem('user'));
-              if(user){
+              if(verified){
                 submitJob();
+                setApplyModal(true);
               }else{
-                setApplyModal(true)
+                setApplyModal(true);
               }
             }} className="px-4 py-2 bg-green-500 text-white rounded-lg w-3/4">
               Apply Now
@@ -146,10 +142,10 @@ export default function Home() {
         </div>
       </div>}
       <ModalBlank openModal={applyModal} setOpenModal={setApplyModal} title={"Apply For Job"}>
-        <VerificationPage applied={applied} submitJob={submitJob} />
+        {verified ? <VerifiedComponent /> : <VerificationPage setVerified={setVerified} submitJob={submitJob} />}
       </ModalBlank>
       <ModalBlank openModal={referModal} setOpenModal={setReferModal} title={"Refer more People"}>
-        <ReferralPage />
+        {verified ? <ReferralPage jobDetails={jobDetails} /> : <VerificationPage setVerified={setVerified} />}
       </ModalBlank>
     </div>
   );
