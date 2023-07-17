@@ -1,7 +1,4 @@
 import React from "react";
-import Image from "next/image";
-import GPlayBadge from "@/assets/gplaybadge.svg";
-import AStoreBadge from "@/assets/astorebadge.svg";
 import {
   FaInstagram,
   FaFacebook,
@@ -9,6 +6,8 @@ import {
   FaTwitter,
   FaLink,
 } from "react-icons/fa";
+import GoogleBadge from "./GoogleBadge";
+import AppleBadge from "./AppleBadge";
 
 const SharingCard = () => {
   return (
@@ -17,8 +16,8 @@ const SharingCard = () => {
         <h1 className="text-lg font-bold">Earn More with Referrals</h1>
         <h1>Download Wrae App Now</h1>
       </div>
-      <Image alt="googleBanner" src={GPlayBadge} width={150} height={35} />
-      <Image alt="appleBanner" src={AStoreBadge} width={150} height={35} />
+      <GoogleBadge />
+      <AppleBadge />
       <div className="flex flex-col items-center space-y-2 w-full">
         <h1 className="font-medium">Share this job :</h1>
         <div className="flex flex-row justify-between w-[60%]">

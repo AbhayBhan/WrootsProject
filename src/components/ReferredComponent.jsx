@@ -1,7 +1,7 @@
 import Image from "next/image";
 import refV from "@/assets/refV.png";
-import GPlayBadge from "@/assets/gplaybadge.svg";
-import AStoreBadge from "@/assets/astorebadge.svg";
+import GoogleBadge from "./GoogleBadge";
+import AppleBadge from "./AppleBadge";
 
 const ReferredComponent = () => {
   return (
@@ -20,8 +20,8 @@ const ReferredComponent = () => {
         </h1>
       </div>
       <div className="flex justify-center gap-4">
-        <Image alt="googleBanner" src={GPlayBadge} width={150} height={35} />
-        <Image alt="appleBanner" src={AStoreBadge} width={150} height={35} />
+        <GoogleBadge />
+        <AppleBadge />
       </div>
       <div className="flex flex-col space-y-2 items-center">
         <h1 className="text-xs text-gray-400">Need Help?</h1>
