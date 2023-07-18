@@ -5,7 +5,7 @@ import { ReferMultiple } from "@/hooks/Refer/Refer";
 import { useMutation } from "react-query";
 import ReferredComponent from "@/components/ReferredComponent";
 
-const ReferralPage = ({ jobDetails , referralAmount }) => {
+const ReferralPage = ({ jobDetails , referralAmount, roleId }) => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const [referred, setReferred] = useState(false);
@@ -46,7 +46,7 @@ const ReferralPage = ({ jobDetails , referralAmount }) => {
   const submitReferrals = () => {
     const reqBody = {
       categoryId : jobDetails?.category?.id,
-      roleId : null,
+      roleId : roleId,
       hiringCompanyId : jobDetails?.company.id,
       candidates : referrals
     }

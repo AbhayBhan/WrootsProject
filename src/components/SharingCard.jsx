@@ -1,11 +1,16 @@
 import React from "react";
 import {
-  FaInstagram,
-  FaFacebook,
-  FaLinkedin,
-  FaTwitter,
-  FaLink,
-} from "react-icons/fa";
+  EmailIcon,
+  EmailShareButton,
+  FacebookIcon,
+  FacebookShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+} from "react-share";
 import GoogleBadge from "./GoogleBadge";
 import AppleBadge from "./AppleBadge";
 
@@ -21,11 +26,21 @@ const SharingCard = () => {
       <div className="flex flex-col items-center space-y-2 w-full">
         <h1 className="font-medium">Share this job :</h1>
         <div className="flex flex-row justify-between w-[60%]">
-          <FaFacebook size={20} color="blue" />
-          <FaInstagram size={20} color="blue" />
-          <FaLinkedin size={20} color="blue" />
-          <FaTwitter size={20} color="blue" />
-          <FaLink size={20} color="blue" />
+          <FacebookShareButton url={window.location.href}>
+            <FacebookIcon size={25} />
+          </FacebookShareButton>
+          <WhatsappShareButton url={window.location.href}>
+            <WhatsappIcon size={25} />
+          </WhatsappShareButton>
+          <TwitterShareButton url={window.location.href}>
+            <TwitterIcon size={25} />
+          </TwitterShareButton>
+          <LinkedinShareButton url={window.location.href}>
+            <LinkedinIcon size={25} />
+          </LinkedinShareButton>
+          <EmailShareButton url={window.location.href}>
+            <EmailIcon size={25} />
+          </EmailShareButton>
         </div>
       </div>
     </div>
