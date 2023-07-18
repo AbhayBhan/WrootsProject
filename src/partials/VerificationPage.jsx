@@ -21,7 +21,11 @@ const VerificationPage = ({setVerified,submitJob}) => {
 
   const verificationSuccess = ({data}) => {
     localStorage.setItem('user', JSON.stringify(data));
-    submitJob();
+    try{
+      submitJob();
+    }catch(e){
+      console.log("Referral Component");
+    }
     setVerifyPage(false);
     setVerified(true);
   }
