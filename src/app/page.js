@@ -14,8 +14,7 @@ import { ReferSingle } from "@/hooks/Refer/Refer";
 import VerifiedComponent from "@/components/VerifiedComponent";
 
 export default function Home({ roleId = 420 }) {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const [verified, setVerified] = useState(user);
+  const [verified, setVerified] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [jobDetails, setJobDetails] = useState({});
@@ -50,6 +49,10 @@ export default function Home({ roleId = 420 }) {
   };
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if(user){
+      setVerified(true);
+    }
     mutate(roleId);
   }, []);
   return (
