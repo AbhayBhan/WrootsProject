@@ -129,13 +129,13 @@ const JobListing = ({ params }) => {
                     setApplyModal(true);
                   }
                 }}
-                className="px-4 py-2 bg-green-500 text-white rounded-lg w-3/4"
+                className="px-4 py-2 bg-green-500 text-white rounded-lg w-3/4 hover:bg-green-600 transition-colors duration-300"
               >
                 Apply Now
               </button>
               <button
                 onClick={() => setReferModal(true)}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg w-3/4"
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg w-3/4 hover:bg-blue-600 transition-colors duration-300"
               >
                 Refer & Earn Upto 90,000
               </button>

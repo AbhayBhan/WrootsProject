@@ -9,7 +9,7 @@ const BonusCard = ({setReferModal, referralAmount}) => {
         <h1 className='font-medium text-xl'>Referral Bonus - {referralAmount}</h1>
         <p>Share us Phone Number of your contacts and get direct cash to your preffered account</p>
       </div>
-      <button onClick={() => setReferModal(true)} className='px-4 py-2 bg-blue-500 text-white rounded-lg'>Refer Now</button>
+      <button onClick={() => setReferModal(true)} className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300'>Refer Now</button>
     </div>
   )
 }

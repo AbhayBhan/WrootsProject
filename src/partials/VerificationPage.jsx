@@ -89,7 +89,7 @@ const VerificationPage = ({setVerified,submitJob}) => {
                 setOtp("");
                 askOTP();
               }}
-              className="text-blue-500 text-sm font-medium"
+              className="text-blue-500 text-sm font-medium hover:text-blue-600 transition-colors duration-300"
             >
               Resend Code
             </button>
@@ -98,7 +98,7 @@ const VerificationPage = ({setVerified,submitJob}) => {
             <button
               disabled={otp.length !== 6}
               onClick={verifyOTP}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg"
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
             >
               {verifyLoading ? <Loader /> : "Verify"}
             </button>
@@ -129,7 +129,7 @@ const VerificationPage = ({setVerified,submitJob}) => {
             <button
               disabled={phone.length !== 12}
               onClick={askOTP}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg"
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
             >
               {otpLoading ? <Loader /> : "Get OTP"}
             </button>
