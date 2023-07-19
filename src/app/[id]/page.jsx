@@ -9,14 +9,17 @@ import JobHeadCard from "@/components/JobHeadCard";
 import SharingCard from "@/components/SharingCard";
 import ModalBlank from "@/components/ModalBlank";
 import VerificationPage from "@/partials/VerificationPage";
+import { FullScreenLoader } from "@/components/Loader";
 import ReferralPage from "@/partials/ReferralPage";
 import { ReferSingle } from "@/hooks/Refer/Refer";
 import VerifiedComponent from "@/components/VerifiedComponent";
+import ErrorComponent from "@/components/ErrorComponent";
 
-const JobListing = ({params}) => {  
+const JobListing = ({ params }) => {
   const [verified, setVerified] = useState(false);
 
   const [loading, setLoading] = useState(true);
+  const [jobError, setJobError] = useState(false);
   const [jobDetails, setJobDetails] = useState({});
 
   const [applyModal, setApplyModal] = useState(false);
@@ -29,6 +32,10 @@ const JobListing = ({params}) => {
 
   const { data, mutate } = useMutation(getJobDetails, {
     onSuccess: jobFetchSuccess,
+    onError: () => {
+      setLoading(false);
+      setJobError(true);
+    },
   });
 
   const { mutate: jobMutate } = useMutation(ReferSingle);
@@ -58,7 +65,9 @@ const JobListing = ({params}) => {
   return (
     <div className="w-full">
       {loading ? (
-        <></>
+        <FullScreenLoader />
+      ) : jobError ? (
+        <ErrorComponent />
       ) : (
         <div className="flex md:flex-row flex-col justify-center mx-auto py-4 px-2 gap-12">
           <div className="flex flex-col space-y-4 md:w-1/3">
@@ -68,17 +77,17 @@ const JobListing = ({params}) => {
                 <h1 className="text-sm font-medium">
                   Job ad Updated : 1 day ago
                 </h1>
-                <h1 className="text-sm font-medium">Job ID : {data.data.id}</h1>
+                <h1 className="text-sm font-medium">Job ID : {jobDetails.id}</h1>
               </div>
             </div>
 
             <div className="flex flex-col space-y-2 w-1/2">
-              <h1 className="text-xl font-bold">{data.data.name}</h1>
+              <h1 className="text-xl font-bold">{jobDetails.name}</h1>
               <h1 className="text-sm font-medium">
                 <span className="text-blue-600">
-                  {data.data.company.name} -
+                  {jobDetails.company.name} -
                 </span>
-                {data.data.location.map((loc) => {
+                {jobDetails.location.map((loc) => {
                   return (
                     <span key={loc.id} className="text-gray-500">
                       {" "}
@@ -102,7 +111,7 @@ const JobListing = ({params}) => {
               <h1 className="text-xl font-bold">Job Overview</h1>
               <div
                 className="flex flex-col space-y-1"
-                dangerouslySetInnerHTML={{ __html: data.data.briefing }}
+                dangerouslySetInnerHTML={{ __html: jobDetails.briefing }}
               />
             </div>
           </div>
