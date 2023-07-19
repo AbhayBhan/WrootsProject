@@ -10,10 +10,13 @@ const ReferralPage = ({ jobDetails , referralAmount, roleId }) => {
 
   const [referred, setReferred] = useState(false);
 
+  const [referralData, setReferralData] = useState({});
+
   const [referrals, setReferrals] = useState([{name : '', phoneNumber : '', email : ''}]);
 
-  const referSuccess = (data) => {
+  const referSuccess = ({data}) => {
     console.log(data);
+    setReferralData(data);
     setReferred(true);
   }
   
@@ -56,7 +59,7 @@ const ReferralPage = ({ jobDetails , referralAmount, roleId }) => {
 
   return (
     <>
-    {referred ? <ReferredComponent /> : 
+    {referred ? <ReferredComponent referralData={referralData} /> : 
     <div className="flex flex-col items-start space-y-5">
       <div className="block space-y-2">
         <h1 className="text-2xl font-bold">Refer Candidates</h1>
