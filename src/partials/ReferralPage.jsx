@@ -48,6 +48,8 @@ const ReferralPage = ({ jobDetails , referralAmount, roleId }) => {
 
   const submitReferrals = () => {
     const reqBody = {
+      userId : user?.id,
+      isWebsite : true,
       categoryId : jobDetails?.category?.id,
       roleId : roleId,
       hiringCompanyId : jobDetails?.company.id,
