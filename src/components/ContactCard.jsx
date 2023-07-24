@@ -7,7 +7,7 @@ const ContactCard = () => {
       <h1 className="font-medium">Need Help? Contact Us</h1>
       <div className="flex flex-row space-x-3">
         <FaPhoneSquareAlt size={25} />
-        <h1>+91 8882212312</h1>
+        <h1>+91 97380 70069</h1>
       </div>
       <div className="flex flex-row space-x-3">
         <FaAt size={25} />

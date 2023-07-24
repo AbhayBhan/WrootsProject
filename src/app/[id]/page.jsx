@@ -74,9 +74,9 @@ const JobListing = ({ params }) => {
             <div className="flex flex-row justify-between">
               <h1 className="text-2xl font-bold text-blue-900">Wroots</h1>
               <div className="flex flex-row space-x-3 mt-1">
-                <h1 className="text-sm font-medium">
+                {/* <h1 className="text-sm font-medium">
                   Job ad Updated : 1 day ago
-                </h1>
+                </h1> */}
                 <h1 className="text-sm font-medium">Job ID : {jobDetails.id}</h1>
               </div>
             </div>
@@ -137,7 +137,11 @@ const JobListing = ({ params }) => {
                 onClick={() => setReferModal(true)}
                 className="px-4 py-2 bg-blue-500 text-white rounded-lg w-3/4 hover:bg-blue-600 transition-colors duration-300"
               >
-                Refer & Earn Upto 90,000
+                Refer & Earn Upto {jobDetails.referralAmount.toLocaleString('en-IN', {
+    maximumFractionDigits: 0,
+    style: 'currency',
+    currency: 'INR'
+})}
               </button>
             </div>
 
