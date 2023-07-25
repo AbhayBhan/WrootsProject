@@ -15,7 +15,8 @@ import { ReferSingle } from "@/hooks/Refer/Refer";
 import VerifiedComponent from "@/components/VerifiedComponent";
 import ErrorComponent from "@/components/ErrorComponent";
 
-const JobListing = ({ params }) => {
+const JobListing = () => {
+  const [id, setId] = useState("");
   const [verified, setVerified] = useState(false);
 
   const [loading, setLoading] = useState(true);
@@ -45,7 +46,7 @@ const JobListing = ({ params }) => {
     const reqBody = {
       categoryId: jobDetails?.category.id,
       userId: user?.id,
-      roleId: params.id,
+      roleId: id,
       hiringCompanyId: jobDetails?.company.id,
       name: user?.name || "",
       email: user?.email || "",
@@ -60,7 +61,14 @@ const JobListing = ({ params }) => {
     if (user) {
       setVerified(true);
     }
-    mutate(params.id);
+    const urlId = window.location.href.split("?id=")[1];
+    if(!urlId){
+      setLoading(false);
+      setJobError(true);
+      return;
+    }
+    setId(urlId);
+    mutate(urlId);
   }, []);
   return (
     <div className="w-full">
@@ -171,7 +179,7 @@ const JobListing = ({ params }) => {
           <ReferralPage
             referralAmount={jobDetails.referralAmount}
             jobDetails={jobDetails}
-            roleId={params.id}
+            roleId={id}
           />
         ) : (
           <VerificationPage setVerified={setVerified} />
